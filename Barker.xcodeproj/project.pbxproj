@@ -13,6 +13,9 @@
 		613B44852751686400F5F978 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 613B44842751686400F5F978 /* Preview Assets.xcassets */; };
 		613B44872751686400F5F978 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B44862751686400F5F978 /* Persistence.swift */; };
 		613B448A2751686400F5F978 /* Barker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 613B44882751686400F5F978 /* Barker.xcdatamodeld */; };
+		613B449227516BF300F5F978 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B449127516BF300F5F978 /* Colors.swift */; };
+		613B44942751A1AE00F5F978 /* MainScreenFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B44932751A1AE00F5F978 /* MainScreenFunctions.swift */; };
+		613B44982751C0EA00F5F978 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613B44972751C0EA00F5F978 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,10 @@
 		613B44842751686400F5F978 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		613B44862751686400F5F978 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		613B44892751686400F5F978 /* Barker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Barker.xcdatamodel; sourceTree = "<group>"; };
+		613B449127516BF300F5F978 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		613B44932751A1AE00F5F978 /* MainScreenFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenFunctions.swift; sourceTree = "<group>"; };
+		613B44952751C0BA00F5F978 /* Barker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Barker.entitlements; sourceTree = "<group>"; };
+		613B44972751C0EA00F5F978 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				613B44982751C0EA00F5F978 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +49,7 @@
 			children = (
 				613B447C2751686300F5F978 /* Barker */,
 				613B447B2751686300F5F978 /* Products */,
+				613B44962751C0EA00F5F978 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,6 +64,8 @@
 		613B447C2751686300F5F978 /* Barker */ = {
 			isa = PBXGroup;
 			children = (
+				613B44952751C0BA00F5F978 /* Barker.entitlements */,
+				613B449027516BDF00F5F978 /* Utilities */,
 				613B447D2751686300F5F978 /* BarkerApp.swift */,
 				613B447F2751686300F5F978 /* ContentView.swift */,
 				613B44812751686400F5F978 /* Assets.xcassets */,
@@ -71,6 +82,23 @@
 				613B44842751686400F5F978 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		613B449027516BDF00F5F978 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				613B449127516BF300F5F978 /* Colors.swift */,
+				613B44932751A1AE00F5F978 /* MainScreenFunctions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		613B44962751C0EA00F5F978 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				613B44972751C0EA00F5F978 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,8 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				613B44872751686400F5F978 /* Persistence.swift in Sources */,
+				613B449227516BF300F5F978 /* Colors.swift in Sources */,
 				613B44802751686300F5F978 /* ContentView.swift in Sources */,
 				613B448A2751686400F5F978 /* Barker.xcdatamodeld in Sources */,
+				613B44942751A1AE00F5F978 /* MainScreenFunctions.swift in Sources */,
 				613B447E2751686300F5F978 /* BarkerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +304,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Barker/Barker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Barker/Preview Content\"";
@@ -290,7 +321,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = garbage.io.Barker;
+				PRODUCT_BUNDLE_IDENTIFIER = garbage.pizza.Barker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -303,6 +334,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Barker/Barker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Barker/Preview Content\"";
@@ -319,7 +351,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = garbage.io.Barker;
+				PRODUCT_BUNDLE_IDENTIFIER = garbage.pizza.Barker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
