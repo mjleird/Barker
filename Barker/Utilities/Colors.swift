@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 class Colors{
-    let mainColor = "#0abde3"
+    let mainColor = "#437909"
+    let gradientSecondaryColor = "#2f9453"
     
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()

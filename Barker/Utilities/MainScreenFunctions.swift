@@ -53,7 +53,7 @@ struct NavigationBarModifier: ViewModifier {
     let coloredAppearance = UINavigationBarAppearance()
     coloredAppearance.configureWithTransparentBackground()
     coloredAppearance.backgroundColor = .clear
-    coloredAppearance.titleTextAttributes = [.foregroundColor: textColor]
+      coloredAppearance.titleTextAttributes = [.foregroundColor: textColor, .font: UIFont(name: Fonts().mainFont, size: 32) as Any]
     coloredAppearance.largeTitleTextAttributes = [.foregroundColor: textColor]
 
     UINavigationBar.appearance().standardAppearance = coloredAppearance
@@ -90,4 +90,13 @@ class HostingController<Content> : UIHostingController<Content> where Content : 
   @objc override dynamic open var preferredStatusBarStyle: UIStatusBarStyle {
      return .lightContent
   }
+}
+extension View {
+    func underlineTextField() -> some View {
+        self
+            .padding(.vertical, 10)
+            .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+            .foregroundColor(.white)
+            .padding(10)
+    }
 }

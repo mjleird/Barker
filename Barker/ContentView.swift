@@ -21,27 +21,28 @@ struct ContentView: View {
     @State private var foodName = ""
     @State var displayValue = ""
     @State private var Foods = [""]
+    @State var dogName = "Doggos"
     
     var body: some View {
         NavigationView {
             VStack(){
-                Text("Can my dog eat...")
-                Text(foodName)
-                Text(displayValue)
-                TextField("type something...", text: $foodName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: foodName) {
-                    print($0)
-                    displayValue = isFoodGoodString(searchParm: foodName)
-                }
-                Button("Search") {
-                    print("Button tapped!")
-                    //send a request to check the server
-                    displayValue = mainScreen().searchResults(searchParm: foodName)
-                }
-            }
+                Text(displayValue).font(.headlineCustom).foregroundColor(.white).animation(.easeIn(duration:0.5)).multilineTextAlignment(.center).padding(10)
+                HStack{
+                    Image(systemName: "magnifyingglass")
+                    SuperTextField(
+                            placeholder: Text("Can my dog eat...").foregroundColor(.white),
+                            text: $foodName
+                        ).font(.headlineCustom)
+                    .onChange(of: foodName) {
+                        print($0)
+                        displayValue = isFoodGoodString(searchParm: foodName)
+                    }
+                }.underlineTextField()
+                    .animation(.linear(duration:0.5))
+            }.offset(y: -50)
            .navigationBarTitle(Text("Barker"), displayMode: .inline)
                 .blueNavigation
+                .background(LinearGradient(gradient: Gradient(colors: [Color(Colors().hexStringToUIColor(hex: Colors().mainColor)), Color(Colors().hexStringToUIColor(hex: Colors().gradientSecondaryColor))]), startPoint: .top, endPoint: .bottom))
         }.onAppear{
             resetData()
             createAllItems()
@@ -109,7 +110,7 @@ struct ContentView: View {
         
       
         print("Number of records :" + "\(items.count)")
-        print("Values: " + (items.first?.foodName)!)
+        //print("Values: " + (items.first?.foodName)!)
     }
     func resetData(){
         for item in items{
@@ -121,14 +122,31 @@ struct ContentView: View {
         //return "Good"
         let returnInt = isFoodGoodCompare(searchParm: searchParm)
         if returnInt == 0{
-            return "Food is OK"
+            if(searchParm.last == "s"){
+                return "\(searchParm) are ok for \(dogName) to eat"
+            }else{
+                return "\(searchParm) is ok for \(dogName) to eat"
+            }
         }else if returnInt == 1{
-            return "Food is not OK"
+            if(searchParm.last == "s"){
+                return "\(dogName) should NEVER eat \(searchParm)"
+            }else{
+                return "\(dogName) should NEVER eat a \(searchParm)"
+            }
         }else if returnInt == 2{
-            return "Food is sometimes OK"
+            if(searchParm.last == "s"){
+                return "\(dogName) can have a few \(searchParm)"
+            }else{
+                return "\(dogName) can have a little bit of \(searchParm)"
+            }
         }
         else{
-            return "Couldn't find this food"
+            if(searchParm.count > 3){
+                return "Oops, doesn't look like we know what this food is"
+            }else{
+                return ""
+            }
+            
         }
     }
     func isFoodGoodCompare(searchParm: String) -> Int{
@@ -148,7 +166,19 @@ struct ContentView: View {
                     break
                 }
             //Add a statement to add an S to the end of the string
-            }else{
+            }else if searchParm == (item.foodName! + "s"){
+                if(item.attribute == 0){
+                    returnCode = 0
+                    break
+                }else if (item.attribute == 1){
+                    returnCode = 1
+                    break
+                }else if (item.attribute == 2){
+                    returnCode = 2
+                    break
+                }
+            }
+            else{
                 returnCode = 3
             }
         }
@@ -170,3 +200,18 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 
+struct SuperTextField: View {
+    
+    var placeholder: Text
+    @Binding var text: String
+    var editingChanged: (Bool)->() = { _ in }
+    var commit: ()->() = { }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            if text.isEmpty { placeholder }
+            TextField("", text: $text, onEditingChanged: editingChanged, onCommit: commit)
+        }
+    }
+    
+}
