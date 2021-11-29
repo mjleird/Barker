@@ -12,6 +12,9 @@ class Colors{
     let mainColor = "#437909"
     let gradientSecondaryColor = "#2f9453"
     
+    let boxMain = "#e67e22"
+    let boxSecondary = "#c0392b"
+    
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 

@@ -22,7 +22,7 @@ extension Font {
 
    /// Create a font with the title text style.
    public static var titleCustom: Font {
-       return Font.custom(Fonts().mainFont, size: UIFont.preferredFont(forTextStyle: .title1).pointSize)
+       return Font.custom(Fonts().mainFont, size: 36)
    }
     public static var title: Font {
         return Font.custom(Fonts().mainFont, size: UIFont.preferredFont(forTextStyle: .title1).pointSize)

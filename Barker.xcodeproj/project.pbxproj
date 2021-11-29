@@ -17,10 +17,11 @@
 		613B44942751A1AE00F5F978 /* MainScreenFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B44932751A1AE00F5F978 /* MainScreenFunctions.swift */; };
 		613B44982751C0EA00F5F978 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613B44972751C0EA00F5F978 /* CloudKit.framework */; };
 		613B449A27540A1200F5F978 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B449927540A1200F5F978 /* Fonts.swift */; };
+		613B449D27546A8E00F5F978 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B449C27546A8E00F5F978 /* About.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		613B447A2751686300F5F978 /* Doggo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Doggo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		613B447A2751686300F5F978 /* Barker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Barker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		613B447D2751686300F5F978 /* BarkerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarkerApp.swift; sourceTree = "<group>"; };
 		613B447F2751686300F5F978 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		613B44812751686400F5F978 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -32,6 +33,7 @@
 		613B44952751C0BA00F5F978 /* Barker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Barker.entitlements; sourceTree = "<group>"; };
 		613B44972751C0EA00F5F978 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		613B449927540A1200F5F978 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		613B449C27546A8E00F5F978 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,7 @@
 		613B447B2751686300F5F978 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				613B447A2751686300F5F978 /* Doggo.app */,
+				613B447A2751686300F5F978 /* Barker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,6 +68,7 @@
 		613B447C2751686300F5F978 /* Barker */ = {
 			isa = PBXGroup;
 			children = (
+				613B449B27546A7D00F5F978 /* Admin */,
 				613B44952751C0BA00F5F978 /* Barker.entitlements */,
 				613B449027516BDF00F5F978 /* Utilities */,
 				613B447D2751686300F5F978 /* BarkerApp.swift */,
@@ -104,6 +107,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		613B449B27546A7D00F5F978 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				613B449C27546A8E00F5F978 /* About.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,7 +132,7 @@
 			);
 			name = Barker;
 			productName = Barker;
-			productReference = 613B447A2751686300F5F978 /* Doggo.app */;
+			productReference = 613B447A2751686300F5F978 /* Barker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -175,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				613B449A27540A1200F5F978 /* Fonts.swift in Sources */,
+				613B449D27546A8E00F5F978 /* About.swift in Sources */,
 				613B44872751686400F5F978 /* Persistence.swift in Sources */,
 				613B449227516BF300F5F978 /* Colors.swift in Sources */,
 				613B44802751686300F5F978 /* ContentView.swift in Sources */,
@@ -310,7 +322,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Barker/Barker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 11.28.2021;
 				DEVELOPMENT_ASSET_PATHS = "\"Barker/Preview Content\"";
 				DEVELOPMENT_TEAM = 539WMA6Y83;
 				ENABLE_PREVIEWS = YES;
@@ -325,9 +337,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = garbage.pizza.Barker;
-				PRODUCT_NAME = Doggo;
+				PRODUCT_NAME = Barker;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -341,7 +353,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Barker/Barker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 11.28.2021;
 				DEVELOPMENT_ASSET_PATHS = "\"Barker/Preview Content\"";
 				DEVELOPMENT_TEAM = 539WMA6Y83;
 				ENABLE_PREVIEWS = YES;
@@ -356,9 +368,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = garbage.pizza.Barker;
-				PRODUCT_NAME = Doggo;
+				PRODUCT_NAME = Barker;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

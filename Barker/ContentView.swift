@@ -21,7 +21,8 @@ struct ContentView: View {
     @State private var foodName = ""
     @State var displayValue = ""
     @State private var Foods = [""]
-    @State var dogName = "Doggos"
+    @State var dogName = "doggo"
+    @State var showingAbout = false
     
     var body: some View {
         NavigationView {
@@ -39,10 +40,27 @@ struct ContentView: View {
                     }
                 }.underlineTextField()
                     .animation(.linear(duration:0.5))
-            }.offset(y: -50)
+            }.offset(y: -100)
            .navigationBarTitle(Text("Barker"), displayMode: .inline)
                 .blueNavigation
                 .background(LinearGradient(gradient: Gradient(colors: [Color(Colors().hexStringToUIColor(hex: Colors().mainColor)), Color(Colors().hexStringToUIColor(hex: Colors().gradientSecondaryColor))]), startPoint: .top, endPoint: .bottom))
+                .navigationBarItems(
+                                    trailing:
+                                        Button(action: {
+                                            
+                                        }){
+                                            Image(systemName: "info.circle").foregroundColor(.white).font(.system(size: 16)).onTapGesture {
+                                                    //self.showingCheatSheet.toggle()
+                                                    print("Tapped")
+                                                    showingAbout.toggle()
+                                                }
+                                        }
+                                        ).sheet(isPresented: $showingAbout) {
+                                            NavigationView{
+                                                AboutView()
+                                            }
+                                            
+                                        }
         }.onAppear{
             resetData()
             createAllItems()
@@ -129,15 +147,15 @@ struct ContentView: View {
             }
         }else if returnInt == 1{
             if(searchParm.last == "s"){
-                return "\(dogName) should NEVER eat \(searchParm)"
+                return "\(searchParm) are NEVER ok for \(dogName) to eat"
             }else{
-                return "\(dogName) should NEVER eat a \(searchParm)"
+                return "\(searchParm) is NEVER ok for \(dogName) to eat"
             }
         }else if returnInt == 2{
             if(searchParm.last == "s"){
-                return "\(dogName) can have a few \(searchParm)"
+                return "A little bit of \(searchParm) is ok for \(dogName) to eat"
             }else{
-                return "\(dogName) can have a little bit of \(searchParm)"
+                return "A little bit of \(searchParm) is ok for \(dogName) to eat"
             }
         }
         else{
