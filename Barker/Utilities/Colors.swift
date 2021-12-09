@@ -15,6 +15,8 @@ class Colors{
     let boxMain = "#e67e22"
     let boxSecondary = "#c0392b"
     
+    let complementatryMain = "#a5b1c2"
+    
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
