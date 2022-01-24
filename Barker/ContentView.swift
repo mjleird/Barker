@@ -49,27 +49,11 @@ struct ContentView: View {
                     }
                 }.underlineTextField()
                     .animation(.linear(duration:0.5))
-                VStack(){
-                    ForEach(petRecs, id: \.self) { pet in
-                       /* Button(action: {
-                            print("button push")
-                        }){
-                            
-                        }.foregroundColor(.white)*/
-                        petCard(filter: pet.idNum!).onTapGesture{
-                            print("going to open object \(pet.idNum!)")
-                            currentPet = pet.idNum!
-                            print("this is the pet \(currentPet)")
-                            showingPetDetails.toggle()
-                        }.frame(height: 100).padding(10)
-                      
-                    }
-                }
-            }
+            }.offset(y: -100)
            .navigationBarTitle(Text("Barker"), displayMode: .inline)
                 .blueNavigation
                 .background(LinearGradient(gradient: Gradient(colors: [Color(Colors().hexStringToUIColor(hex: Colors().mainColor)), Color(Colors().hexStringToUIColor(hex: Colors().gradientSecondaryColor))]), startPoint: .top, endPoint: .bottom))
-                .navigationBarItems(leading:
+                .navigationBarItems(/*leading:
                                         Button(action: {
                                             
                                         }){
@@ -78,7 +62,7 @@ struct ContentView: View {
                                                     print("Tapped")
                                                     showingCreateNewPet.toggle()
                                                 }
-                                        },
+                                        },*/
                                     
                                     trailing:
                                         Button(action: {
@@ -97,12 +81,12 @@ struct ContentView: View {
                                             
                                         }.sheet(isPresented: $showingCreateNewPet) {
                                             NavigationView{
-                                                CreatePetView()
+                                                CreatePetView(showingForm: $showingCreateNewPet)
                                             }
                                             
                                         }.sheet(isPresented: $showingPetDetails) {
                                             NavigationView{
-                                                petDetails(currentPet: $currentPet)
+                                                petDetails(currentPet: $currentPet, showingForm: $showingPetDetails)
                                             }.onAppear{
                                                 print("called nav view for \(currentPet)")
                                             }
@@ -110,7 +94,6 @@ struct ContentView: View {
 
         }.onAppear{
             resetData()
-            findPets()
             createAllItems()
         }
     }
@@ -195,14 +178,20 @@ struct ContentView: View {
         if returnInt == 0{
             if(searchParm.last == "s"){
                 return "\(searchParm) are ok for \(dogName) to eat"
-            }else{
-                return "\(searchParm) is ok for \(dogName) to eat"
+            }else if(searchParm.first == "A" || searchParm.first == "a" || searchParm.first == "E" || searchParm.first == "e" || searchParm.first == "I" || searchParm.first == "i" || searchParm.first == "O" || searchParm.first == "o" || searchParm.first == "U" || searchParm.first == "u"){
+                return "An \(searchParm) is ok for \(dogName) to eat"
+            }
+            else{
+                return "A \(searchParm) is ok for \(dogName) to eat"
             }
         }else if returnInt == 1{
             if(searchParm.last == "s"){
                 return "\(searchParm) are NEVER ok for \(dogName) to eat"
-            }else{
-                return "\(searchParm) is NEVER ok for \(dogName) to eat"
+            }else if(searchParm.first == "A" || searchParm.first == "a" || searchParm.first == "E" || searchParm.first == "e" || searchParm.first == "I" || searchParm.first == "i" || searchParm.first == "O" || searchParm.first == "o" || searchParm.first == "U" || searchParm.first == "u"){
+                return "An \(searchParm) is NEVER ok for \(dogName) to eat"
+            }
+            else{
+                return "A \(searchParm) is NEVER ok for \(dogName) to eat"
             }
         }else if returnInt == 2{
             if(searchParm.last == "s"){
@@ -255,30 +244,7 @@ struct ContentView: View {
         }
         return returnCode
     }
-    func findPets(){
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Pet")
-                //request.predicate = NSPredicate(format: "age = %@", "12")
-                request.returnsObjectsAsFaults = false
-                do {
-                    let result = try moc.fetch(request)
-                    for data in result as! [NSManagedObject] {
-                       // print("result1: \(result.name)")
-                        //pets.append(petData(name: (data.value(forKey: "name") as! String), birthday: (data.value(forKey: "birthday") as! Date), petid: data.value(forKey: "idNum") as! String))
-                        //pets[].name = data.value(forKey: "name") as! String
-                        for element in pets {
-                            //print("arr val: \(element.petid)")
-                        }
-                  }
-                    print("here is the request:  \(result.count)")
-                    
-                } catch {
-                    
-                    print("Failed")
-                }
-        
-              
-                
-    }
+
 }
 class petData: ObservableObject{
     var name: String = "test"
@@ -298,13 +264,6 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
-/*struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}*/
-
-
 struct SuperTextField: View {
     
     var placeholder: Text
@@ -322,6 +281,9 @@ struct SuperTextField: View {
 }
 class petHelper{
     @Environment(\.managedObjectContext) var moc1
+   /* @FetchRequest(
+           sortDescriptors: [NSSortDescriptor(keyPath: \Pet.idNum, ascending: true)],
+           animation: .default) var pets: FetchedResults<Pet>*/
     let context = Barker.PersistenceController().container.viewContext
     
     func getPetInfo(filter: String) -> petData {
@@ -345,6 +307,30 @@ class petHelper{
 
         return pet
     }
+   
+    func deletePet(filter: String) {
+        var pet = petData()
+        let fetchRequest: NSFetchRequest<Pet>
+        fetchRequest = Pet.fetchRequest()
+        fetchRequest.predicate = NSPredicate(
+            format: "idNum == %@", filter
+        )
+
+        var objects = try? context.fetch(fetchRequest)
+        print("found this object \(objects?.first!.name)")
+        
+        let deleteGuy = objects?.first
+        context.delete(deleteGuy!)
+        do {
+            try context.save()
+         
+            print("Saved")
+        } catch {
+            print((error.localizedDescription))
+        }
+        
+        
+    }
 }
 class pet{
     
@@ -352,10 +338,12 @@ class pet{
 struct petDetails: View {
     @Environment(\.managedObjectContext) var moc1
     @Binding var currentPet: String
+    @Binding var showingForm: Bool
     @State var petName: String = ""
     @State var petPicture: Data = Data()
     @State var petBirthday: Date = Date()
     @State var petGuy = petData()
+    @State var refresh = false
     
     //@StateObject private var petDetails = petData(name: "", birthday: Date())
     
@@ -370,10 +358,10 @@ struct petDetails: View {
                 Spacer()
                 VStack(){
                     VStack(){
-                        Text("Born: \(petGuy.birthday, style: .date)").multilineTextAlignment(.leading).font(.headlineCustom)
+                        Text("Born: \(petGuy.birthday, style: .date)").multilineTextAlignment(.leading).font(.headlineCustom).foregroundColor(.white)
                     }
                     VStack(){
-                        Text("Gotcha: \(petGuy.gotchaDate, style: .date)").multilineTextAlignment(.leading).font(.headlineCustom)
+                        Text("Gotcha: \(petGuy.gotchaDate, style: .date)").multilineTextAlignment(.leading).font(.headlineCustom).foregroundColor(.white)
                    
                     }
                    
@@ -396,12 +384,18 @@ struct petDetails: View {
             }.onAppear{
                 UITableView.appearance().backgroundColor = .clear
             }
-            
+            Button(action: {
+                 print("button push")
+                petHelper().deletePet(filter: currentPet)
+                showingForm.toggle()
+                refresh.toggle()
+             }){
+                 Text("Delete")
+                 
+             }.foregroundColor(.white)
          
         }.onAppear{
             petGuy = petHelper().getPetInfo(filter: currentPet)
-        
-            print("onappear")
         }
         }.blueNavigation
             .navigationBarTitle(Text(petGuy.name), displayMode: .inline)
@@ -433,7 +427,6 @@ struct petCard: View {
                     Spacer()
                     Text(pet.name ?? "").font(.headlineCustom).offset(x: -25)
                     Spacer()
-                    //Text(pet.birthday ?? Date(), style: .date)
                 }
             }
         }

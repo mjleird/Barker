@@ -57,7 +57,7 @@ struct AboutView: View {
       
         }*/
         Form{
-            Section(header: Text("Data").font(.headlineCustom)){
+            Section(header: Text("Data").font(.headlineCustom).foregroundColor(colorScheme == .dark ? Color.white : Color.black)){
                     Text("All food data is based on information provided by the ASPCA").font(.headlineCustom)
                     Button(action: {
                                // update the URL if you'd like to
@@ -71,7 +71,7 @@ struct AboutView: View {
                         SafariView(url:URL(string: self.urlStringPro)!)
                     }
             }
-            Section(header: Text("This App").font(.headlineCustom)){
+            Section(header: Text("This App").font(.headlineCustom).foregroundColor(colorScheme == .dark ? Color.white : Color.black)){
                 Button(action: {
                     //SKStoreReviewController.requestReview()
                     if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -90,7 +90,19 @@ struct AboutView: View {
                     Spacer()
                     Text("\(build)").font(.headlineCustom)
                 }
-                Text("© 2021, Garbage Pizza Industries").font(.headlineCustom)
+                
+            }
+            Section(header: Text("The Old Fashioned App Company").font(.headlineCustom).foregroundColor(colorScheme == .dark ? Color.white : Color.black)){
+                HStack(){
+                    Link(
+                                            "Griller - Outdoor Cooking Assistant",
+                                            destination: URL(string: "https://apps.apple.com/us/app/griller-timing-and-smoking/id1507719800")!
+                    ).font(.headlineCustom).foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    Spacer()
+                    Image("Griller").resizable().frame(width: 25, height: 25).cornerRadius(5)
+                    
+                }
+                Text("© 2022, Old Fashioned App Company").font(.headlineCustom)
             }
         }
         .blueNavigation

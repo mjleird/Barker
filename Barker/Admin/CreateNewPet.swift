@@ -17,8 +17,8 @@ struct CreatePetView: View {
     @Environment(\.managedObjectContext) var moc
     
     @State private var image: Image?
-        @State private var showImagePicker = false
-        @State private var inputImage: UIImage?
+    @State private var showImagePicker = false
+    @State private var inputImage: UIImage?
     
     let shadow = 2 as CGFloat
     let padding = 5 as CGFloat
@@ -31,6 +31,9 @@ struct CreatePetView: View {
     @State var weight: String = ""
     @State var foodAmount: String = ""
     @State var foodFrequency: String = ""
+    @State var validSubmit: Bool = false
+    @State var displayImage: String = ""
+    @Binding var showingForm: Bool
     
     func save() {
             let pickedImage = inputImage?.jpegData(compressionQuality: 1.0)
@@ -49,7 +52,7 @@ struct CreatePetView: View {
             
             
             Form{
-                Section(header: Text("Pet info").font(.headlineCustom)){
+                Section(header: Text("Pet info").font(.headlineCustom).foregroundColor(colorScheme == .dark ? Color.white : Color.black)){
                     HStack(){
                         Text("Name").font(.headlineCustom)
                         Spacer()
@@ -95,24 +98,38 @@ struct CreatePetView: View {
                                        Button(action: { self.showImagePicker.toggle() }) {
                                            Text("Select Image", comment: "Select Image Button")
                                                .accessibility(identifier: "Select Image")
-                                       }
-                                   }
+                                }
+                    }
                 }
                
             }
-            
             Button(action: {
-               createPet()
+                var isValid: Bool = checkIfValidSubmit()
+                if isValid{
+                    createPet()
+                    showingForm.toggle()
+                }else{
+                    //message to user that submit is not valid here
+                }
+               
             }) {
                   Text("Submit").foregroundColor(colorScheme == .dark ? Color.white : Color.black).fontWeight(.light).font(.headlineCustom)
              }.font(.headlineCustom)
-            
             
         }
         .blueNavigation
          .navigationBarTitle(Text("Create New Pet"), displayMode: .inline)
          .background(LinearGradient(gradient: Gradient(colors: [Color(Colors().hexStringToUIColor(hex: Colors().mainColor)), Color(Colors().hexStringToUIColor(hex: Colors().gradientSecondaryColor))]), startPoint: .top, endPoint: .bottom))
          .sheet(isPresented: $showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$inputImage) }
+    }
+    func checkIfValidSubmit() -> Bool{
+        if (petName == ""){
+            return false
+        }else if(petBirthday == Date()){
+            return false
+        }else{
+            return true
+        }
     }
     func createPet(){
         let petInfo = Pet(context: moc)
@@ -154,11 +171,11 @@ struct CreatePetView: View {
     }
  
 
-struct CreatePetView_Previews: PreviewProvider {
+/*struct CreatePetView_Previews: PreviewProvider {
     static var previews: some View {
         CreatePetView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-}
+}*/
 struct ImagePicker: UIViewControllerRepresentable {
 
     // MARK: - Environment Object
